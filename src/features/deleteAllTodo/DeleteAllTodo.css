@@ -1,0 +1,12 @@
+.deleteAllButton{
+    font-size: 20px;
+    border: none;
+    border-radius: 15px;
+    background-color: rgb(207, 116, 207);
+    cursor: pointer;
+    color:white;
+}
+
+.deleteAllButton:hover{
+    opacity: 0.7;
+}
