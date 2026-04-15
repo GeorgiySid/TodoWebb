@@ -1,11 +1,12 @@
 //import { useContext } from 'react';
 import { useTranslation } from 'react-i18next'
 
+import { useTodoStore } from '@/entities'
+
 //import TodoContext from '@/entities/todo/context/TodoContext';
 
 import { Button } from '@/shared'
 
-import { useTodoStore } from '../../entities'
 import './style.css'
 
 export const DeleteAllTodo = () => {

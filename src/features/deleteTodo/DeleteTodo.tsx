@@ -2,12 +2,13 @@
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
+import { useTodoStore } from '@/entities'
+
 //import TodoContext from '@/entities/todo/context/TodoContext';
 
 import { Button } from '@/shared'
 import trashIcon from '@/shared/assets/trash-svgrepo-com.svg'
 
-import { useTodoStore } from '../../entities'
 import './style.css'
 
 interface DeleteTodoProps {

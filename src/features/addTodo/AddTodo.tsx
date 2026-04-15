@@ -2,13 +2,13 @@
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
+import { useTodoStore } from '@/entities'
 //import TodoContext from '@/entities/todo/context/TodoContext';
 import type { Todo } from '@/entities/todo/model/typesContext'
 
 import { Button } from '@/shared'
 import pluseIcon from '@/shared/assets/plus-svgrepo-com.svg'
 
-import { useTodoStore } from '../../entities'
 import './style.css'
 
 export const AddTodo = () => {
