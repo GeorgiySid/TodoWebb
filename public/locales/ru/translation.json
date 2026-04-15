@@ -1,0 +1,12 @@
+{
+    "placeholder" : "Пиши сюда",
+    "deleteAll" : "Удалить все",
+    "countTasks" : "У вас осталось",
+    "task" : "задач",
+    "add" : "Добавить",
+    "delete" : "Удалить",
+    "todoApp" : "Задачи",
+    "confirmDeleteAll" : "Удалить все?",
+    "taskAdded" : "Добавлена задача",
+    "taskDeleted" : "Задача удалена"
+}

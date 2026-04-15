@@ -1,13 +1,15 @@
-import MainPage from '../pages/mainPage/MainPage'
-import './App.css'
+import { ToastContainer } from 'react-toastify'
+
+import { MainPage } from '../pages'
 import './styles/index.css'
 
-function App() {
+export const App = () => {
   return (
     <>
-     <MainPage/>
+      <MainPage />
+      <ToastContainer position='bottom-right' autoClose={2000} />
     </>
   )
 }
 
-export default App
+App.displayName = 'App'

@@ -1,16 +1,17 @@
-import { TodoProvider } from "../../entities/todo/context/TodoContext";
-import TodoWidget from "../../widgets/todoWidget/TodoWidget";
-import './MainPage.css'
+import { TodoProvider } from '@/entities/todo/context/TodoContext'
 
+import { TodoWidget } from '@/widgets'
 
-const MainPage = () => {
-    return (
+import './style.css'
+
+export const MainPage = () => {
+  return (
     <TodoProvider>
-        <div className="mainPage">
-            <TodoWidget/>
-        </div>
+      <div className='mainPage'>
+        <TodoWidget />
+      </div>
     </TodoProvider>
-    )
+  )
 }
 
-export default MainPage;
+MainPage.displayName = 'MainPage'

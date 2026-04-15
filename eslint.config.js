@@ -1,6 +1,6 @@
 import js from '@eslint/js'
 import globals from 'globals'
-import reactHooks from 'eslint-plugin-react-hooks'
+import reactHooks, { rules } from 'eslint-plugin-react-hooks'
 import reactRefresh from 'eslint-plugin-react-refresh'
 import tseslint from 'typescript-eslint'
 import { defineConfig, globalIgnores } from 'eslint/config'
@@ -16,8 +16,38 @@ export default defineConfig([
       reactRefresh.configs.vite,
     ],
     languageOptions: {
-      ecmaVersion: 2020,
-      globals: globals.browser,
+      ecmaVersion: 'latest',
+      globals: {
+        window: 'readonly',
+        document: 'readonly',
+        navigator: 'readonly',
+        console: 'readonly',
+        process: 'readonly',
+        Buffer: 'readonly',
+        jest: 'readonly'
+      },
+      parser: require('@typescript-eslint/parser'),
+      parserOptions: {
+        ecmaFeatures: {
+          jsx: true
+        }
+      },
+      rules:{
+        '@typescript-eslint/no-unused-vars': 'error',
+        '@typescript-eslint/no-empty-function': 'off',
+        'no-var': 'error',
+        'prefer-const': 'error',
+        'react/prop-types': 'off',
+        'react/jsx-uses-react': 'off',
+        'react/react-in-jsx-scope': 'off',
+        'import/order': [
+        'error',
+        {
+          'groups': ['builtin', 'external', 'internal', 'parent', 'sibling', 'index'],
+          'newlines-between': 'always'
+        }
+      ]
+      }
     },
   },
 ])

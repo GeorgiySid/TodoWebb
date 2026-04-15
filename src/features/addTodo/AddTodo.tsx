@@ -1,58 +1,60 @@
-import { useContext } from "react";
-import Button from "../../shared/ui/Button/Button";
-import TodoContext from "../../entities/todo/context/TodoContext";
-import type { Todo } from "../../entities/todo/model/typesContext";
-import pluseIcon from '../../shared/assets/plus-svgrepo-com.svg'
-import './AddTodo.css'
+//import { useContext } from 'react';
+import { useTranslation } from 'react-i18next'
+import { toast } from 'react-toastify'
 
-const AddTodo = () => {
+//import TodoContext from '@/entities/todo/context/TodoContext';
+import type { Todo } from '@/entities/todo/model/typesContext'
 
-    const {
-        inputValue,
-        setInputValue,
-        setTodoList,
-        todoList,
-        } = useContext(TodoContext)
+import { Button } from '@/shared'
+import pluseIcon from '@/shared/assets/plus-svgrepo-com.svg'
 
-    const handleInputChange:React.ChangeEventHandler<HTMLInputElement> = (e) => {
-        setInputValue(e.target.value)
+import { useTodoStore } from '../../entities'
+import './style.css'
+
+export const AddTodo = () => {
+  const { t } = useTranslation()
+
+  //const { inputValue, setInputValue, setTodoList, todoList } = useContext(TodoContext);
+  const { inputValue, setInputValue, todoList, setTodoList } = useTodoStore()
+  const notify = () => toast(t('taskAdded'))
+
+  const handleInputChange: React.ChangeEventHandler<HTMLInputElement> = e => {
+    setInputValue(e.target.value)
+  }
+
+  const addTodo = () => {
+    if (inputValue.trim() !== '') {
+      const newTodo: Todo = {
+        id: Date.now().toString(),
+        title: inputValue.trim(),
+      }
+      setTodoList(() => [newTodo, ...todoList])
+      setInputValue('')
     }
+    notify()
+  }
 
-    const addTodo = () => {
-        if(inputValue.trim() !== '') {
-            const newTodo: Todo = {
-                 id: Date.now().toString(),
-                title:inputValue.trim()
-            }
-            setTodoList([newTodo, ...todoList])
-            setInputValue('')
-                
-        }
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      addTodo()
     }
-
-    const handleKeyPress = (e :React.KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === 'Enter') {
-            addTodo();
-        }
-    }
-    return (
-        <div className="addTodo">
-            <input 
-            className="addInput"
-            value={inputValue}
-            onChange={handleInputChange}
-            onKeyDown={handleKeyPress}
-            placeholder="Пиши сюда"
-            /> 
-            <Button 
-            className={'addButton'}
-            onClick={addTodo}
-            icon="Добавить"
-            iconPath={pluseIcon}
-            imgName="addButtonIcon"
-            />
-        </div>
-    )
+  }
+  return (
+    <div className='addTodo'>
+      <input
+        className='addInput'
+        value={inputValue}
+        onChange={handleInputChange}
+        onKeyDown={handleKeyPress}
+        placeholder={t('placeholder')}
+      />
+      <Button
+        className={'addButton'}
+        onClick={addTodo}
+        children={<img src={pluseIcon} alt={t('add')} className={'addButtonIcon'} />}
+      />
+    </div>
+  )
 }
 
-export default AddTodo;
+AddTodo.displayName = 'AddTodo'

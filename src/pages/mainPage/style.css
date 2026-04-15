@@ -1,0 +1,12 @@
+.mainPage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.todoWidget {
+  width: 650px;
+  background-color: white;
+  border-radius: 25px;
+}

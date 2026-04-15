@@ -1,0 +1,12 @@
+{
+    "placeholder" : "Write here",
+    "deleteAll" : "Delete All",
+    "countTasks" : "You have",
+    "task" : "tasks left",
+    "add" : "Add",
+    "delete" : "Delete",
+    "todoApp" : "TodoApp",
+    "confirmDeleteAll" : "Delete All?",
+    "taskAdded" : "Task added",
+    "taskDeleted" : "Task deleted"
+}

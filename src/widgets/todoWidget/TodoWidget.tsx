@@ -1,23 +1,33 @@
-import { useContext } from "react";
-import TodoList from "../../entities/todo/ui/TodoList";
-import AddTodo from "../../features/addTodo/AddTodo";
-import DeleteAllTodo from "../../features/deleteAllTodo/DeleteAllTodo";
-import TodoContext from "../../entities/todo/context/TodoContext";
-import './TodoWidget.css'
+//import { useContext } from 'react'
+import { useTranslation } from 'react-i18next'
 
-const TodoWidget = () => {
-    const { todoList } = useContext(TodoContext)
-    return(
-        <div className="todoWidget">
-            <div className="titleTodo">TodoApp</div>
-            <AddTodo />
-            <TodoList />
-            <div className="widgetTodoFooter">
-                У вас осталось {todoList.length} задач !
-                <DeleteAllTodo />
-            </div>
-        </div>
-    )
+import { TodoList } from '@/entities'
+
+//import TodoContext from '@/entities/todo/context/TodoContext'
+
+import { AddTodo, DeleteAllTodo, LanguageButtons } from '@/features'
+
+import { useTodoStore } from '../../entities'
+import './style.css'
+
+export const TodoWidget = () => {
+  const { t } = useTranslation()
+
+  //const { todoList } = useContext(TodoContext)
+  const { todoList } = useTodoStore()
+
+  return (
+    <div className='todoWidget'>
+      <div className='titleTodo'>{t('todoApp')}</div>
+      <LanguageButtons />
+      <AddTodo />
+      <TodoList />
+      <div className='widgetTodoFooter'>
+        {t('countTasks')} {todoList.length} {t('task')} !
+        <DeleteAllTodo />
+      </div>
+    </div>
+  )
 }
 
-export default TodoWidget;
+TodoWidget.displayName = 'TodoWidget'

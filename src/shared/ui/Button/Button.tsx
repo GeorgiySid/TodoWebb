@@ -1,23 +1,15 @@
-type ButtonProps = {
-    onClick: () => void,
-    className: string,
-    name?: string,
-    iconPath?: string,
-    icon?: string,
-    imgName?:string
+interface ButtonProps {
+  onClick: () => void
+  className: string
+  children: React.ReactNode
 }
 
-const Button: React.FC<ButtonProps> = ({ onClick, className, iconPath, name, icon, imgName }) => {
-    return (
-        <div>
-            <button 
-            className={className}
-            onClick={onClick}>
-            {iconPath && <img src={iconPath} alt={icon} className={imgName} />}
-            {name}
-            </button>
-        </div>
-    )
+export const Button: React.FC<ButtonProps> = ({ onClick, className, children }) => {
+  return (
+    <button className={className} onClick={onClick}>
+      {children}
+    </button>
+  )
 }
 
-export default Button;
+Button.displayName = 'Button'
