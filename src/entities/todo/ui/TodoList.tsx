@@ -4,25 +4,54 @@ import { DeleteTodo } from '@/features'
 import { useTodoStore } from '../store'
 //import TodoContext from '../context/TodoContext'
 import './style.css'
+import { useVirtualizer } from '@tanstack/react-virtual'
+import { useRef } from 'react'
 
 export const TodoList = () => {
   //const { todoList } = useContext(TodoContext)
   const { todoList } = useTodoStore()
 
+  const scrollRef = useRef<HTMLDivElement>(null)
+
+  const virtualizer = useVirtualizer({
+    count: todoList?.length ?? 0,
+    estimateSize:() => 70,
+    getScrollElement: () => scrollRef.current,
+    measureElement: (element) => {
+      return element?.getBoundingClientRect().height ?? 70
+    },
+  })
+
+  const virtualItems = virtualizer.getVirtualItems()
+
   return (
-    <div className='todoList'>
-      <ul>
+    <div className='todoList' ref={scrollRef}>
+      <ul
+      style={{
+        height:`${virtualizer.getTotalSize()}px`
+      }}>
         {todoList && todoList.length > 0 ? (
-          todoList.map(todo => (
-            <li key={todo.id}>
-              <div className='todo'>
-                <div className='todoText'>{todo.title}</div>
-                <DeleteTodo id={todo.id} />
-              </div>
-            </li>
-          ))
-        ) : (
-          <div className='nothingTodo'> Тут пусто </div>
+          virtualItems.map((virtualItem) => {
+            const todo = todoList[virtualItem.index]
+            return (
+              <li 
+              key={todo.id}
+              ref={(node) => {
+                virtualizer.measureElement(node)
+              }}
+              data-index={virtualItem.index}
+              style={{
+                transform: `translateY(${virtualItem.start}px)`
+              }}
+              >
+                <div className='todo'>
+                  <div className='todoText'>{todo.title}</div>
+                  <DeleteTodo id={todo.id} />
+                </div>
+              </li>
+            )
+          })
+        ) : (<div className='nothingTodo'> Пусто</div>
         )}
       </ul>
     </div>
