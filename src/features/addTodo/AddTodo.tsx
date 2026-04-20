@@ -29,9 +29,11 @@ export const AddTodo = () => {
         title: inputValue.trim(),
       }
       setTodoList(() => [newTodo, ...todoList])
+      if(inputValue){
+        notify()
+      }
       setInputValue('')
     }
-    notify()
   }
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
