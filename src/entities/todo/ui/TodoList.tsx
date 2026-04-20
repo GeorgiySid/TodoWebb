@@ -1,11 +1,13 @@
 //import { useContext } from 'react'
+import { useRef } from 'react'
+
+import { useVirtualizer } from '@tanstack/react-virtual'
+
 import { DeleteTodo } from '@/features'
 
 import { useTodoStore } from '../store'
 //import TodoContext from '../context/TodoContext'
 import './style.css'
-import { useVirtualizer } from '@tanstack/react-virtual'
-import { useRef } from 'react'
 
 export const TodoList = () => {
   //const { todoList } = useContext(TodoContext)
@@ -15,9 +17,9 @@ export const TodoList = () => {
 
   const virtualizer = useVirtualizer({
     count: todoList?.length ?? 0,
-    estimateSize:() => 70,
+    estimateSize: () => 70,
     getScrollElement: () => scrollRef.current,
-    measureElement: (element) => {
+    measureElement: element => {
       return element?.getBoundingClientRect().height ?? 70
     },
   })
@@ -27,23 +29,22 @@ export const TodoList = () => {
   return (
     <div className='todoList' ref={scrollRef}>
       <ul
-      style={{
-        height:`${virtualizer.getTotalSize()}px`
-      }}>
+        style={{
+          height: `${virtualizer.getTotalSize()}px`,
+        }}>
         {todoList && todoList.length > 0 ? (
-          virtualItems.map((virtualItem) => {
+          virtualItems.map(virtualItem => {
             const todo = todoList[virtualItem.index]
             return (
-              <li 
-              key={todo.id}
-              ref={(node) => {
-                virtualizer.measureElement(node)
-              }}
-              data-index={virtualItem.index}
-              style={{
-                transform: `translateY(${virtualItem.start}px)`
-              }}
-              >
+              <li
+                key={todo.id}
+                ref={node => {
+                  virtualizer.measureElement(node)
+                }}
+                data-index={virtualItem.index}
+                style={{
+                  transform: `translateY(${virtualItem.start}px)`,
+                }}>
                 <div className='todo'>
                   <div className='todoText'>{todo.title}</div>
                   <DeleteTodo id={todo.id} />
@@ -51,7 +52,8 @@ export const TodoList = () => {
               </li>
             )
           })
-        ) : (<div className='nothingTodo'> Пусто</div>
+        ) : (
+          <div className='nothingTodo'> Пусто</div>
         )}
       </ul>
     </div>
